@@ -12,10 +12,41 @@ const initdb = async () =>
     },
   });
 
-// TODO: Add logic to a method that accepts some content and adds it to the database
-export const putDb = async (content) => console.error('putDb not implemented');
 
-// TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => console.error('getDb not implemented');
+import { MongoClient } from 'mongodb';
+
+
+export const getDb = async () => {
+  const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Connected to the database');
+
+    const db = client.db(dbName);
+    const collection = db.collection('jate');
+    const result = await collection.find({}).toArray();
+    return result;
+  } finally {
+    await client.close();
+  }
+};
+
+
+export const getDb = async () => {
+  const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Connected to the database');
+
+    const db = client.db(dbName);
+    const collection = db.collection('jate');
+    const result = await collection.find({}).toArray();
+    return result;
+  } finally {
+    await client.close();
+  }
+}
 
 initdb();
